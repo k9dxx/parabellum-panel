@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>PARABELLUM ⛧ SYSTEM</title>
+<style>
+:root {
+  --red:#ff1838;
+  --green:#00ff9c;
+  --bg:#080808;
+  --panel:#101010;
+  --line:#252525;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:#ddd;
+  font:14px monospace;min-height:100vh;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(
+    transparent 0px,transparent 3px,
+    #ffffff05 4px,#ffffff05 5px
+  );z-index:5;
+}
+header{
+  padding:24px 16px;text-align:center;
+  border-bottom:1px solid var(--red);
+  background:radial-gradient(ellipse at top,#3a0710,#080808 70%);
+}
+.logo{font-size:clamp(27px,7vw,48px);font-weight:900;
+  letter-spacing:4px;color:var(--red);text-shadow:0 0 20px #ff183866}
+.sub{color:var(--green);letter-spacing:3px;margin-top:10px}
+nav{display:flex;justify-content:center;gap:10px;
+  flex-wrap:wrap;padding:14px;border-bottom:1px solid var(--line)}
+button{
+  background:#111;color:var(--green);border:1px solid #285743;
+  padding:10px 14px;font:inherit;cursor:pointer
+}
+button:hover{background:#153025}
+main{max-width:1000px;margin:auto;padding:18px}
+h2{font-size:14px;color:var(--red);letter-spacing:2px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);
+  padding:16px;min-width:0}
+.label{color:#888;font-size:11px;letter-spacing:1px}
+.value{font-size:22px;color:var(--green);margin-top:10px}
+.terminal{background:#050807;border:1px solid #194b35;
+  padding:14px;min-height:190px;line-height:1.8;overflow-wrap:anywhere}
+#logs{color:var(--green);white-space:pre-wrap}
+.prompt{color:var(--red)}
+input{background:#090909;border:1px solid #285743;color:var(--green);
+  padding:12px;width:100%;font:inherit;outline:none}
+footer{text-align:center;color:#666;padding:25px;font-size:11px}
+.blink{animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+@media(max-width:480px){
+ .grid{grid-template-columns:1fr}
+ main{padding:12px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⛧ PARABELLUM</div>
+  <div class="sub">PBLM.777 // DIGITAL UNDERGROUND</div>
+  <p style="color:#888">DISCIPLINA • LEALDADE • RESPEITO</p>
+</header>
+
+<nav>
+  <button onclick="section('overview')">[ INÍCIO ]</button>
+  <button onclick="section('terminal')">[ TERMINAL ]</button>
+  <button onclick="section('about')">[ SOBRE ]</button>
+</nav>
+
+<main>
+<section id="overview">
+  <h2>// PAINEL PRINCIPAL</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="label">SISTEMA</div>
+      <div class="value">ONLINE</div>
+    </div>
+    <div class="card">
+      <div class="label">IDENTIDADE</div>
+      <div class="value">PBLM.777</div>
+    </div>
+    <div class="card">
+      <div class="label">HORÁRIO LOCAL</div>
+      <div class="value" id="clock">--:--:--</div>
+    </div>
+    <div class="card">
+      <div class="label">STATUS DA INTERFACE</div>
+      <div class="value">ESTÁVEL</div>
+    </div>
+  </div>
+  <h2>// TRANSMISSÃO DO SISTEMA</h2>
+  <div class="terminal">
+    <div id="logs"></div>
+    <span class="prompt">root@pblm:~$ </span><span class="blink">█</span>
+  </div>
+</section>
+
+<section id="terminal" hidden>
+  <h2>// TERMINAL INTERATIVO</h2>
+  <div class="terminal">
+    <div id="output">PARABELLUM SHELL v1.0
+Digite help para ver os comandos.
+</div>
+    <form id="cmdform">
+      <span class="prompt">visitor@pblm:~$ </span>
+      <input id="cmd" autocomplete="off" placeholder="Digite help..." aria-label="Comando">
+    </form>
+  </div>
+  <p style="color:#777">Terminal demonstrativo: não executa comandos reais no dispositivo.</p>
+</section>
+
+<section id="about" hidden>
+  <h2>// SOBRE A PARABELLUM</h2>
+  <div class="card">
+    <div class="value">⛧ PBLM.777</div>
+    <p>Uma identidade digital criada para quem valoriza presença,
+    estratégia, união e lealdade.</p>
+    <p style="color:var(--red)">NOISE IS NOTHING. PRESENCE IS EVERYTHING.</p>
+  </div>
+</section>
+</main>
+
+<footer>PARABELLUM ⛧ — INTERFACE VISUAL • 2026</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function section(name){
+  ['overview','terminal','about'].forEach(id=>{
+    $(id).hidden = id !== name;
+  });
+}
+
+function clock(){
+  $('clock').textContent = new Date().toLocaleTimeString('pt-BR');
+}
+setInterval(clock,1000);
+clock();
+
+const messages=[
+  '[ OK ] Inicializando interface PBLM...',
+  '[ OK ] Carregando módulos visuais...',
+  '[ OK ] Verificação local concluída.',
+  '[ INFO ] Interface demonstrativa pronta.',
+  '[ READY ] PARABELLUM SYSTEM ONLINE.'
+];
+let i=0;
+function writeLog(){
+  if(i<messages.length){
+    $('logs').textContent += messages[i++]+'\n';
+    setTimeout(writeLog,650);
+  }
+}
+writeLog();
+
+$('cmdform').addEventListener('submit',e=>{
+  e.preventDefault();
+  const input=$('cmd');
+  const command=input.value.trim().toLowerCase();
+  const out=$('output');
+  const replies={
+    help:'Comandos: help, about, status, date, clear, home',
+    about:'PARABELLUM ⛧ PBLM.777 — painel visual.',
+    status:'Interface: ONLINE | Modo: DEMONSTRAÇÃO',
+    date:new Date().toLocaleString('pt-BR'),
+    home:'Voltando ao painel principal...'
+  };
+  if(!command)return;
+  if(command==='clear'){
+    out.textContent='';
+  }else{
+    out.textContent+='\nvisitor@pblm:~$ '+command+'\n'+
+      (replies[command]||'Comando desconhecido. Digite help.');
+  }
+  if(command==='home')section('overview');
+  input.value='';
+});
+</script>
+</body>
+</html>
