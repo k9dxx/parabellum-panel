@@ -1,189 +1,104 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080808">
-<title>PARABELLUM ⛧ SYSTEM</title>
-<style>
-:root {
-  --red:#ff1838;
-  --green:#00ff9c;
-  --bg:#080808;
-  --panel:#101010;
-  --line:#252525;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:#ddd;
-  font:14px monospace;min-height:100vh;
-}
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(
-    transparent 0px,transparent 3px,
-    #ffffff05 4px,#ffffff05 5px
-  );z-index:5;
-}
-header{
-  padding:24px 16px;text-align:center;
-  border-bottom:1px solid var(--red);
-  background:radial-gradient(ellipse at top,#3a0710,#080808 70%);
-}
-.logo{font-size:clamp(27px,7vw,48px);font-weight:900;
-  letter-spacing:4px;color:var(--red);text-shadow:0 0 20px #ff183866}
-.sub{color:var(--green);letter-spacing:3px;margin-top:10px}
-nav{display:flex;justify-content:center;gap:10px;
-  flex-wrap:wrap;padding:14px;border-bottom:1px solid var(--line)}
-button{
-  background:#111;color:var(--green);border:1px solid #285743;
-  padding:10px 14px;font:inherit;cursor:pointer
-}
-button:hover{background:#153025}
-main{max-width:1000px;margin:auto;padding:18px}
-h2{font-size:14px;color:var(--red);letter-spacing:2px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);
-  padding:16px;min-width:0}
-.label{color:#888;font-size:11px;letter-spacing:1px}
-.value{font-size:22px;color:var(--green);margin-top:10px}
-.terminal{background:#050807;border:1px solid #194b35;
-  padding:14px;min-height:190px;line-height:1.8;overflow-wrap:anywhere}
-#logs{color:var(--green);white-space:pre-wrap}
-.prompt{color:var(--red)}
-input{background:#090909;border:1px solid #285743;color:var(--green);
-  padding:12px;width:100%;font:inherit;outline:none}
-footer{text-align:center;color:#666;padding:25px;font-size:11px}
-.blink{animation:blink 1s steps(2) infinite}
-@keyframes blink{50%{opacity:.25}}
-@media(max-width:480px){
- .grid{grid-template-columns:1fr}
- main{padding:12px}
-}
-</style>
+<meta name="description" content="PARABELLUM PBLM.777 — portal oficial da comunidade">
+<title>PARABELLUM // PBLM.777</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<header>
-  <div class="logo">⛧ PARABELLUM</div>
-  <div class="sub">PBLM.777 // DIGITAL UNDERGROUND</div>
-  <p style="color:#888">DISCIPLINA • LEALDADE • RESPEITO</p>
-</header>
-
-<nav>
-  <button onclick="section('overview')">[ INÍCIO ]</button>
-  <button onclick="section('terminal')">[ TERMINAL ]</button>
-  <button onclick="section('about')">[ SOBRE ]</button>
-</nav>
+<aside id="sidebar">
+<a class="logo" href="#inicio">P<span>BLM</span><small>PBLM.777 // COMMUNITY</small></a>
+<div class="label">MENU PRINCIPAL</div>
+<a class="nav active" href="#inicio">◈ Dashboard</a>
+<a class="nav" href="#membros">♟ Membros</a>
+<a class="nav" href="#cargos">⬡ Cargos</a>
+<a class="nav" href="#noticias">▤ Notícias</a>
+<a class="nav" href="#galeria">▧ Galeria</a>
+<a class="nav" href="#ferramentas">⌘ Ferramentas</a>
+<a class="nav" href="#terminal">$_ Terminal</a>
+<a class="nav" href="#regras">⊙ Código de conduta</a>
+<div class="sidebar-bottom"><i></i> INTERFACE OPERACIONAL<small>Dados online ainda não conectados</small></div>
+</aside>
 
 <main>
-<section id="overview">
-  <h2>// PAINEL PRINCIPAL</h2>
-  <div class="grid">
-    <div class="card">
-      <div class="label">SISTEMA</div>
-      <div class="value">ONLINE</div>
-    </div>
-    <div class="card">
-      <div class="label">IDENTIDADE</div>
-      <div class="value">PBLM.777</div>
-    </div>
-    <div class="card">
-      <div class="label">HORÁRIO LOCAL</div>
-      <div class="value" id="clock">--:--:--</div>
-    </div>
-    <div class="card">
-      <div class="label">STATUS DA INTERFACE</div>
-      <div class="value">ESTÁVEL</div>
-    </div>
-  </div>
-  <h2>// TRANSMISSÃO DO SISTEMA</h2>
-  <div class="terminal">
-    <div id="logs"></div>
-    <span class="prompt">root@pblm:~$ </span><span class="blink">█</span>
-  </div>
+<header>
+<button id="menu" aria-label="Abrir menu">☰</button>
+<div class="crumb">PBLM <span>/</span> <b id="current">DASHBOARD</b></div>
+<div class="status"><i></i> INTERFACE ATIVA</div>
+</header>
+
+<section id="inicio" class="hero">
+<div class="eyebrow">DISCIPLINA / LEALDADE / RESPEITO</div>
+<div class="hero-art">P<span>777</span></div>
+<p class="kicker">PORTAL OFICIAL DA COMUNIDADE</p>
+<h1>PARA<span>BELLUM</span><sup>777</sup></h1>
+<p class="subtitle">Não é apenas um nome. É uma identidade em construção.</p>
+<div class="actions"><a class="button red" href="#membros">EXPLORAR PAINEL ↗</a><a class="button" href="#regras">CÓDIGO DE CONDUTA</a></div>
+<div class="hero-foot">PBLM.777 <span>●</span> EST. COMMUNITY</div>
 </section>
 
-<section id="terminal" hidden>
-  <h2>// TERMINAL INTERATIVO</h2>
-  <div class="terminal">
-    <div id="output">PARABELLUM SHELL v1.0
-Digite help para ver os comandos.
+<section class="stats">
+<article><small>MEMBROS CADASTRADOS</small><strong>—</strong><p>Banco de dados não conectado</p></article>
+<article><small>CARGOS REGISTRADOS</small><strong>—</strong><p>Cadastro administrativo pendente</p></article>
+<article><small>NOTÍCIAS PUBLICADAS</small><strong>0</strong><p>Nenhuma notícia cadastrada</p></article>
+</section>
+
+<section id="membros" class="section">
+<div class="heading"><div><small>01 / COMUNIDADE</small><h2>MEMBROS<span>.</span></h2></div><b class="tag">AGUARDANDO CONFIGURAÇÃO</b></div>
+<div class="panel"><div class="symbol">♟</div><h3>Diretório da comunidade</h3><p>O diretório aparecerá aqui quando um banco de dados real for conectado. Nenhum integrante foi inventado.</p></div>
+</section>
+
+<section id="cargos" class="section">
+<div class="heading"><div><small>02 / HIERARQUIA</small><h2>CARGOS<span>.</span></h2></div></div>
+<div class="grid">
+<article class="panel"><b class="number">01</b><h3>Fundador</h3><p>Estrutura de cargo prevista. Titular e permissões ainda não cadastrados.</p></article>
+<article class="panel"><b class="number">02</b><h3>Administração</h3><p>Permissões administrativas precisam de autenticação e banco de dados.</p></article>
+<article class="panel"><b class="number">03</b><h3>Membro</h3><p>Cadastro de integrantes ainda não habilitado.</p></article>
 </div>
-    <form id="cmdform">
-      <span class="prompt">visitor@pblm:~$ </span>
-      <input id="cmd" autocomplete="off" placeholder="Digite help..." aria-label="Comando">
-    </form>
-  </div>
-  <p style="color:#777">Terminal demonstrativo: não executa comandos reais no dispositivo.</p>
 </section>
 
-<section id="about" hidden>
-  <h2>// SOBRE A PARABELLUM</h2>
-  <div class="card">
-    <div class="value">⛧ PBLM.777</div>
-    <p>Uma identidade digital criada para quem valoriza presença,
-    estratégia, união e lealdade.</p>
-    <p style="color:var(--red)">NOISE IS NOTHING. PRESENCE IS EVERYTHING.</p>
-  </div>
+<section id="noticias" class="section">
+<div class="heading"><div><small>03 / COMUNICAÇÃO</small><h2>NOTÍCIAS<span>.</span></h2></div></div>
+<div class="panel"><h3>Nenhuma publicação</h3><p>As notícias serão exibidas aqui quando forem adicionadas por uma fonte de dados configurada.</p></div>
 </section>
+
+<section id="galeria" class="section">
+<div class="heading"><div><small>04 / IDENTIDADE VISUAL</small><h2>GALERIA<span>.</span></h2></div></div>
+<div class="grid">
+<div class="art-card"><span>P</span><small>PARABELLUM / 777</small></div>
+<div class="art-card alt"><span>✦</span><small>IDENTIDADE EM CONSTRUÇÃO</small></div>
+<div class="art-card"><span>†</span><small>PBLM COMMUNITY</small></div>
+</div>
+<p class="muted">Elementos gráficos gerados por CSS; nenhuma imagem de membro ou evento é apresentada como real.</p>
+</section>
+
+<section id="ferramentas" class="section">
+<div class="heading"><div><small>05 / UTILITÁRIOS</small><h2>FERRAMENTAS<span>.</span></h2></div></div>
+<div class="grid">
+<article class="panel"><h3>Gerador de senha</h3><p>Gera uma senha aleatória localmente no seu navegador.</p><label>Tamanho <input id="length" type="number" min="12" max="64" value="20"></label><button id="generate" class="button red">GERAR SENHA</button><input id="password" readonly placeholder="Resultado"><button id="copy" class="button">COPIAR</button><p id="toolmsg" role="status"></p></article>
+<article class="panel"><h3>Relógio local</h3><strong id="clock">--:--:--</strong><p>Horário do dispositivo que acessa o painel.</p></article>
+</div>
+</section>
+
+<section id="terminal" class="section">
+<div class="heading"><div><small>06 / INTERFACE LOCAL</small><h2>TERMINAL<span>.</span></h2></div><b class="tag">SIMULADO</b></div>
+<div class="terminal"><div class="terminal-bar"><span>● ● ●</span><span>PBLM://LOCAL</span><button id="clear">LIMPAR</button></div><div id="output" aria-live="polite"><p>PARABELLUM TERMINAL — interface local</p><p>Digite <b>help</b> para consultar os comandos.</p></div><form id="terminal-form"><label for="command">visitor@pblm:~$</label><input id="command" autocomplete="off" placeholder="help"><button>EXECUTAR</button></form></div>
+<p class="muted">Este terminal não executa comandos do Android, do servidor ou de outros sistemas.</p>
+</section>
+
+<section id="regras" class="section">
+<div class="heading"><div><small>07 / PRINCÍPIOS</small><h2>CÓDIGO DE CONDUTA<span>.</span></h2></div></div>
+<div class="rule"><b>01</b><div><h3>RESPEITO</h3><p>Trate integrantes e visitantes com dignidade.</p></div></div>
+<div class="rule"><b>02</b><div><h3>LEALDADE</h3><p>Construa confiança por meio de atitudes honestas.</p></div></div>
+<div class="rule"><b>03</b><div><h3>PRIVACIDADE</h3><p>Não publique dados pessoais, senhas ou informações privadas de terceiros.</p></div></div>
+<div class="rule"><b>04</b><div><h3>RESPONSABILIDADE</h3><p>Não use a identidade da comunidade para ameaçar, perseguir ou intimidar pessoas.</p></div></div>
+</section>
+
+<footer><a class="logo" href="#inicio">P<span>BLM</span><small>PBLM.777</small></a><p>Portal da comunidade · <span id="year"></span></p><a href="#inicio">VOLTAR AO TOPO ↑</a></footer>
 </main>
-
-<footer>PARABELLUM ⛧ — INTERFACE VISUAL • 2026</footer>
-
-<script>
-const $ = id => document.getElementById(id);
-
-function section(name){
-  ['overview','terminal','about'].forEach(id=>{
-    $(id).hidden = id !== name;
-  });
-}
-
-function clock(){
-  $('clock').textContent = new Date().toLocaleTimeString('pt-BR');
-}
-setInterval(clock,1000);
-clock();
-
-const messages=[
-  '[ OK ] Inicializando interface PBLM...',
-  '[ OK ] Carregando módulos visuais...',
-  '[ OK ] Verificação local concluída.',
-  '[ INFO ] Interface demonstrativa pronta.',
-  '[ READY ] PARABELLUM SYSTEM ONLINE.'
-];
-let i=0;
-function writeLog(){
-  if(i<messages.length){
-    $('logs').textContent += messages[i++]+'\n';
-    setTimeout(writeLog,650);
-  }
-}
-writeLog();
-
-$('cmdform').addEventListener('submit',e=>{
-  e.preventDefault();
-  const input=$('cmd');
-  const command=input.value.trim().toLowerCase();
-  const out=$('output');
-  const replies={
-    help:'Comandos: help, about, status, date, clear, home',
-    about:'PARABELLUM ⛧ PBLM.777 — painel visual.',
-    status:'Interface: ONLINE | Modo: DEMONSTRAÇÃO',
-    date:new Date().toLocaleString('pt-BR'),
-    home:'Voltando ao painel principal...'
-  };
-  if(!command)return;
-  if(command==='clear'){
-    out.textContent='';
-  }else{
-    out.textContent+='\nvisitor@pblm:~$ '+command+'\n'+
-      (replies[command]||'Comando desconhecido. Digite help.');
-  }
-  if(command==='home')section('overview');
-  input.value='';
-});
-</script>
+<script src="assets/app.js"></script>
 </body>
 </html>
