@@ -17,11 +17,12 @@ const dateText = value => {
 $('#year').textContent = new Date().getFullYear();
 const menu = $('#menu'), sidebar = $('#sidebar'), overlay = $('#menu-overlay');
 function closeMenu() {
-  sidebar.classList.remove('open'); overlay.hidden = true;
+  sidebar.classList.remove('open'); sidebar.inert = matchMedia('(max-width:760px)').matches; overlay.hidden = true;
   menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label','Abrir menu');
 }
 menu.addEventListener('click', () => {
   const open = sidebar.classList.toggle('open');
+  sidebar.inert = !open && matchMedia('(max-width:760px)').matches;
   overlay.hidden = !open;
   menu.setAttribute('aria-expanded', String(open));
   menu.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
@@ -32,6 +33,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && sidebar.classList.contains('open')) { closeMenu(); menu.focus(); }
 });
 window.matchMedia('(max-width:760px)').addEventListener('change', closeMenu);
+closeMenu();
 const dialog = $('#detail');
 function showDetail(node) {
   $('#detail-body').replaceChildren(node); dialog.showModal();
@@ -64,9 +66,9 @@ function renderMembers() {
           }
         } catch { /* An invalid optional social link is omitted. */ }
       }
-      showDetail(detail);
+      detail.append(PBLM.sharing('membros',m));showDetail(detail);
     });
-    card.append(button); target.append(card);
+    card.dataset.memberId=PBLM.recordId(m);card.append(button,PBLM.saveButton('membros',PBLM.recordId(m))); target.append(card);
   });
 }
 function renderRoles() {
@@ -84,7 +86,7 @@ function newsDetail(item) {
   const box = element('article');
   box.append(element('small',item.categoria+' / '+dateText(item.data),'eyebrow'),element('h2',item.titulo));
   item.paragrafos.forEach(p => box.append(element('p',p)));
-  showDetail(box);
+  box.append(PBLM.sharing('noticias',item));showDetail(box);
 }
 function renderNews() {
   const target=$('#news-list');if(!target)return;
@@ -98,7 +100,7 @@ function renderNews() {
   list.forEach(n=>{
     const card=element('article',undefined,'panel news-card');
     card.append(element('small',n.categoria+' / '+dateText(n.data),'eyebrow'),element('h3',n.titulo),element('p',n.resumo));
-    const button=element('button','LER COMUNICADO ↗','button');button.addEventListener('click',()=>newsDetail(n));card.append(button);target.append(card);
+    const button=element('button','LER COMUNICADO ↗','button');button.addEventListener('click',()=>newsDetail(n));card.append(button,PBLM.saveButton('noticias',n.id));target.append(card);
   });
 }
 function safeImage(path) {
@@ -116,21 +118,13 @@ function renderGallery() {
     card.append(img,element('small',g.categoria,'eyebrow'),element('h3',g.titulo));
     const button=element('button','AMPLIAR','button');
     button.addEventListener('click',()=>{
-      const detail=element('div');const large=img.cloneNode();large.loading='eager';detail.append(element('h2',g.titulo),large);showDetail(detail);
+      const detail=element('div');const large=img.cloneNode();large.loading='eager';detail.append(element('h2',g.titulo),large);detail.append(PBLM.sharing('galeria',g));showDetail(detail);
     });
     const download=element('a','BAIXAR ARTE ↓','button red');download.href=g.arquivo;download.download=g.arquivo.split('/').pop();
-    card.append(button,download);target.append(card);
+    card.append(button,download,PBLM.saveButton('galeria',g.id));target.append(card);
   });
 }
-function validateData(data) {
-  for(const key of ['membros','cargos','noticias','galeria'])if(!Array.isArray(data[key]))throw new Error('Formato de conteúdo inválido');
-  const required={membros:['nome','cargo','descricao'],cargos:['id','nome','descricao'],noticias:['id','titulo','data','categoria','resumo'],galeria:['id','titulo','categoria','arquivo']};
-  for(const key of Object.keys(required))for(const row of data[key]) {
-    if(!row||required[key].some(field=>typeof row[field]!=='string'))throw new Error('Registro inválido');
-    if(key==='noticias'&&(!Array.isArray(row.paragrafos)||row.paragrafos.some(p=>typeof p!=='string')))throw new Error('Notícia inválida');
-  }
-  return data;
-}
+function validateData(data) { return PBLM.validate(data); }
 async function loadContent() {
   $('#load-error').hidden=true;
   try {
@@ -146,7 +140,9 @@ async function loadContent() {
       renderGallery();
     }
     for(const node of $$('.load-failed'))node.remove();
+    window.PBLM_DATA=content;document.dispatchEvent(new CustomEvent('pblm:loaded',{detail:content}));
   } catch {
+    document.dispatchEvent(new Event('pblm:failed'));
     $('#load-error').hidden=false;
     $$('[data-count]').forEach(node=>{node.textContent='—';});
     for(const id of ['#members-list','#roles-list','#news-list','#gallery-list']) {
@@ -195,14 +191,14 @@ $('#share')?.addEventListener('click',async()=>{
   if(navigator.share){try{await navigator.share({title:'⛧ PARABELLUM',url:siteURL});$('#share-status').textContent='Compartilhamento concluído.';return;}catch(e){if(e.name==='AbortError')return;}}
   await copyValue(siteURL,$('#site-url'),$('#share-status'));
 });
-const routes={home:'index.html',membros:'comunidade.html#membros',cargos:'comunidade.html#cargos',regras:'comunidade.html#regras',noticias:'noticias.html',galeria:'galeria.html',ferramentas:'ferramentas.html',terminal:'ferramentas.html#terminal'};
+const routes={explorar:'explorar.html',agenda:'agenda.html',materiais:'materiais.html',favoritos:'favoritos.html',ajuda:'ajuda.html',home:'index.html',membros:'comunidade.html#membros',cargos:'comunidade.html#cargos',regras:'comunidade.html#regras',noticias:'noticias.html',galeria:'galeria.html',ferramentas:'ferramentas.html',terminal:'ferramentas.html#terminal'};
 $('#terminal-form')?.addEventListener('submit',e=>{
   e.preventDefault();const raw=$('#command').value.trim();if(!raw)return;
   const c=raw.toLowerCase(),out=$('#output');out.append(element('p','visitor@pblm:~$ '+raw));
   if(c==='clear')out.replaceChildren();
   else if(routes[c])location.assign(routes[c]);
   else {
-    const answers={help:['help, about, date, status, clear, home, membros, cargos, regras, noticias, galeria, ferramentas, terminal'],about:['⛧ PARABELLUM / PBLM.777 — disciplina, lealdade e respeito.'],date:[new Date().toLocaleString('pt-BR')],status:[content?'Conteúdo carregado: '+content.membros.length+' membro(s), '+content.noticias.length+' notícia(s).':'Conteúdo ainda não carregado.','Terminal local ativo.']};
+    const answers={help:['help, about, date, status, clear, home, membros, cargos, regras, noticias, galeria, ferramentas, terminal, explorar, agenda, materiais, favoritos, ajuda'],about:['⛧ PARABELLUM / PBLM.777 — disciplina, lealdade e respeito.'],date:[new Date().toLocaleString('pt-BR')],status:[content?'Conteúdo carregado: '+content.membros.length+' membro(s), '+content.noticias.length+' notícia(s).':'Conteúdo ainda não carregado.','Terminal local ativo.']};
     (answers[c]||['Comando desconhecido. Digite help.']).forEach(line=>out.append(element('p',line)));
   }
   while(out.children.length>100)out.firstElementChild.remove();
@@ -212,4 +208,4 @@ $('#clear')?.addEventListener('click',()=>$('#output').replaceChildren());
 // Preserve links shared before the separate pages existed.
 const oldHash=location.hash.slice(1);
 if((location.pathname.endsWith('/')||location.pathname.endsWith('/index.html'))&&routes[oldHash])location.replace(routes[oldHash]);
-if($('[data-count]')||$('#members-list')||$('#news-list')||$('#gallery-list')||$('#terminal-form'))loadContent();
+loadContent();

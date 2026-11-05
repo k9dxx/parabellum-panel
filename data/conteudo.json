@@ -4,7 +4,8 @@
       "nome": "k9",
       "cargo": "fundador",
       "descricao": "Criador da PARABELLUM e responsável pelo portal.",
-      "instagram": "https://www.instagram.com/k9.shonkz_/"
+      "instagram": "https://www.instagram.com/k9.shonkz_/",
+      "id": "k9"
     }
   ],
   "cargos": [
@@ -25,6 +26,19 @@
     }
   ],
   "noticias": [
+    {
+      "id": "portal-expandido",
+      "titulo": "Mais caminhos para a comunidade",
+      "categoria": "Atualização",
+      "data": "2026-11-04",
+      "resumo": "Busca geral, favoritos, materiais, agenda e uma central de ajuda chegam ao portal.",
+      "paragrafos": [
+        "A nova versão reúne a busca de conteúdos em Explorar. É possível encontrar integrantes, notícias, artes, materiais e respostas da central de ajuda em um só lugar.",
+        "Os favoritos ajudam a guardar conteúdos neste navegador. O kit visual, o guia da comunidade e a paleta de cores estão disponíveis na página Materiais.",
+        "A Agenda está preparada para os encontros que a administração publicar. Nenhum evento ou participante é inventado para preencher o portal.",
+        "A central de Ajuda responde às dúvidas frequentes e prepara pedidos públicos no GitHub. A área Gerenciar ganhou um editor de rascunhos para facilitar a organização do conteúdo."
+      ]
+    },
     {
       "id": "novo-portal",
       "titulo": "Um novo espaço para a PARABELLUM",
@@ -56,6 +70,80 @@
       "titulo": "Disciplina. Lealdade. Respeito.",
       "categoria": "Manifesto",
       "arquivo": "assets/artes/principios.svg"
+    }
+  ],
+  "eventos": [],
+  "recursos": [
+    {
+      "id": "kit-visual",
+      "titulo": "Kit visual PARABELLUM",
+      "categoria": "Identidade",
+      "descricao": "As três artes vetoriais da comunidade, reunidas em um arquivo ZIP.",
+      "arquivo": "assets/downloads/parabellum-kit-visual.zip",
+      "formato": "ZIP · 3 SVGs"
+    },
+    {
+      "id": "guia-comunidade",
+      "titulo": "Guia da comunidade",
+      "categoria": "Guias",
+      "descricao": "Princípios, estrutura, participação e canais oficiais em um guia para guardar.",
+      "arquivo": "assets/downloads/guia-parabellum.txt",
+      "formato": "TXT"
+    },
+    {
+      "id": "paleta",
+      "titulo": "Paleta oficial",
+      "categoria": "Identidade",
+      "descricao": "As cores do portal em CSS para reutilizar nos seus projetos.",
+      "arquivo": "assets/downloads/parabellum-cores.css",
+      "formato": "CSS"
+    }
+  ],
+  "faq": [
+    {
+      "id": "participar",
+      "pergunta": "Como faço para entrar na PARABELLUM?",
+      "resposta": "Abra Comunidade e use Solicitar entrada. Você será levado ao GitHub para confirmar um pedido público, usando seu apelido. A administração avalia o pedido antes de incluir o integrante."
+    },
+    {
+      "id": "github",
+      "pergunta": "Preciso de conta para navegar?",
+      "resposta": "Não. Todas as páginas públicas podem ser acessadas sem entrar em uma conta. Para enviar pedidos, sugestões ou relatos pelo GitHub, é necessário entrar no GitHub."
+    },
+    {
+      "id": "aprovacao",
+      "pergunta": "Meu pedido me coloca automaticamente na lista?",
+      "resposta": "Não. O diretório é atualizado pela administração depois da aprovação. Não há aprovação automática nem prazo garantido."
+    },
+    {
+      "id": "favoritos",
+      "pergunta": "Onde ficam meus favoritos e minhas anotações?",
+      "resposta": "Ficam neste navegador, neste dispositivo. Não são sincronizados com outros celulares ou contas e podem desaparecer se você limpar os dados do navegador. Não guarde informações sensíveis nas anotações."
+    },
+    {
+      "id": "arte",
+      "pergunta": "Como baixo as artes?",
+      "resposta": "Na Galeria, use Baixar arte. Em Materiais, o kit visual reúne as três artes em um ZIP. Os vetores SVG preservam a nitidez em tamanhos diferentes."
+    },
+    {
+      "id": "editar",
+      "pergunta": "Como o conteúdo é atualizado?",
+      "resposta": "O conteúdo público fica no repositório oficial. A área Gerenciar oferece um editor de rascunhos e orienta o envio do arquivo pelo GitHub. Somente quem tem permissão no repositório pode publicar."
+    },
+    {
+      "id": "agenda",
+      "pergunta": "Como acompanho os próximos encontros?",
+      "resposta": "A Agenda exibe os eventos publicados pela administração. Cada evento pode ser salvo no calendário do seu dispositivo. Se não houver evento publicado, a página informa isso sem inventar datas."
+    },
+    {
+      "id": "contato",
+      "pergunta": "Como relato um problema ou faço uma sugestão?",
+      "resposta": "Use o formulário em Ajuda. Ele prepara um pedido no GitHub e você confirma o envio lá. As mensagens ficam públicas; use apenas informações que você pode divulgar."
+    },
+    {
+      "id": "privacidade",
+      "pergunta": "O site tem contas privadas de visitantes?",
+      "resposta": "Esta versão é um portal público e não oferece contas privadas de visitantes. A autorização para editar e publicar o conteúdo é feita pelo GitHub."
     }
   ]
 }
