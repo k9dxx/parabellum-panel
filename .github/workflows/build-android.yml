@@ -53,33 +53,3 @@ jobs:
           path: android-app/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
-      - name: Preparar assinatura opcional
-        env:
-          PBLM_KEYSTORE_BASE64: ${{ secrets.PBLM_KEYSTORE_BASE64 }}
-          PBLM_STORE_PASSWORD: ${{ secrets.PBLM_STORE_PASSWORD }}
-          PBLM_KEY_ALIAS: ${{ secrets.PBLM_KEY_ALIAS }}
-          PBLM_KEY_PASSWORD: ${{ secrets.PBLM_KEY_PASSWORD }}
-        shell: bash
-        run: |
-          if [[ -z "$PBLM_KEYSTORE_BASE64" || -z "$PBLM_STORE_PASSWORD" || -z "$PBLM_KEY_ALIAS" || -z "$PBLM_KEY_PASSWORD" ]]; then
-            echo "Assinatura release não configurada: gerando somente APK debug."
-            exit 0
-          fi
-          printf '%s' "$PBLM_KEYSTORE_BASE64" | base64 --decode > "$GITHUB_WORKSPACE/android-app/pblm-release.jks"
-          echo "PBLM_SIGNED=1" >> "$GITHUB_ENV"
-      - name: Compilar APK de distribuição assinado
-        if: env.PBLM_SIGNED == '1'
-        env:
-          PBLM_KEYSTORE_FILE: ${{ github.workspace }}/android-app/pblm-release.jks
-          PBLM_STORE_PASSWORD: ${{ secrets.PBLM_STORE_PASSWORD }}
-          PBLM_KEY_ALIAS: ${{ secrets.PBLM_KEY_ALIAS }}
-          PBLM_KEY_PASSWORD: ${{ secrets.PBLM_KEY_PASSWORD }}
-        run: gradle --project-dir android-app :app:assembleRelease --no-daemon
-      - name: Disponibilizar APK assinado
-        if: env.PBLM_SIGNED == '1'
-        uses: actions/upload-artifact@v4
-        with:
-          name: PARABELLUM-APK-release
-          path: android-app/app/build/outputs/apk/release/app-release.apk
-          if-no-files-found: error
-          retention-days: 30
