@@ -1,0 +1,71 @@
+name: PARABELLUM - APK Android
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'android-app/**'
+      - '.github/workflows/build-android.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Configurar Gradle 8.13
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Instalar plataforma Android 35
+        run: sdkmanager --install "platforms;android-35" "build-tools;35.0.0"
+      - name: Compilar APK de teste (debug)
+        run: gradle --project-dir android-app :app:assembleDebug --no-daemon
+      - name: Disponibilizar APK de teste
+        uses: actions/upload-artifact@v4
+        with:
+          name: PARABELLUM-APK-debug
+          path: android-app/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+      - name: Preparar assinatura opcional
+        env:
+          PBLM_KEYSTORE_BASE64: ${{ secrets.PBLM_KEYSTORE_BASE64 }}
+          PBLM_STORE_PASSWORD: ${{ secrets.PBLM_STORE_PASSWORD }}
+          PBLM_KEY_ALIAS: ${{ secrets.PBLM_KEY_ALIAS }}
+          PBLM_KEY_PASSWORD: ${{ secrets.PBLM_KEY_PASSWORD }}
+        shell: bash
+        run: |
+          if [[ -z "$PBLM_KEYSTORE_BASE64" || -z "$PBLM_STORE_PASSWORD" || -z "$PBLM_KEY_ALIAS" || -z "$PBLM_KEY_PASSWORD" ]]; then
+            echo "Assinatura release não configurada: gerando somente APK debug."
+            exit 0
+          fi
+          printf '%s' "$PBLM_KEYSTORE_BASE64" | base64 --decode > "$GITHUB_WORKSPACE/android-app/pblm-release.jks"
+          echo "PBLM_SIGNED=1" >> "$GITHUB_ENV"
+      - name: Compilar APK de distribuição assinado
+        if: env.PBLM_SIGNED == '1'
+        env:
+          PBLM_KEYSTORE_FILE: ${{ github.workspace }}/android-app/pblm-release.jks
+          PBLM_STORE_PASSWORD: ${{ secrets.PBLM_STORE_PASSWORD }}
+          PBLM_KEY_ALIAS: ${{ secrets.PBLM_KEY_ALIAS }}
+          PBLM_KEY_PASSWORD: ${{ secrets.PBLM_KEY_PASSWORD }}
+        run: gradle --project-dir android-app :app:assembleRelease --no-daemon
+      - name: Disponibilizar APK assinado
+        if: env.PBLM_SIGNED == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: PARABELLUM-APK-release
+          path: android-app/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
