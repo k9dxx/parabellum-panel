@@ -5,7 +5,7 @@
   const size=25,status=q('#private-status');
   function message(text){status.textContent=text;}
   function clearEditor(){selected=null;q('#private-note-title').value='';q('#private-note-body').value='';q('#private-editor-title').textContent='Nova anotação';}
-  function clearSession(){session=null;rows=[];clearEditor();q('#private-notes').replaceChildren();q('#private-account').textContent='';q('#private-workspace').hidden=true;q('#private-auth').hidden=false;}
+  function clearSession(){document.dispatchEvent(new CustomEvent("pblm:signedout"));session=null;rows=[];clearEditor();q('#private-notes').replaceChildren();q('#private-account').textContent='';q('#private-workspace').hidden=true;q('#private-auth').hidden=false;}
   function lock(value){busy=value;document.querySelectorAll('#private-auth button,#private-workspace button').forEach(b=>{b.disabled=value;});}
   function usableConfig(c){
     if(!c||c.enabled!==true)return false;
@@ -76,6 +76,8 @@
     session={accessToken:result.access_token,refreshToken:result.refresh_token,expiresAt:Date.now()+result.expires_in*1000};
     q('#private-account').textContent=user.email||'Conta GitHub';q('#private-auth').hidden=true;q('#private-workspace').hidden=false;page=0;
     message('Sessão ativa. Suas anotações são restritas à sua conta pelo banco de dados.');await list();
+    document.dispatchEvent(new CustomEvent("pblm:authenticated",{detail:{api,userId:user.id}}));
+    if(location.hash==="#community-editor")document.querySelector("#community-editor").scrollIntoView();
   }
   q('#private-note-form').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const title=q('#private-note-title').value.trim(),body=q('#private-note-body').value;if(!title||title.length>120||body.length>20000){message('Use um título de até 120 caracteres e texto de até 20.000 caracteres.');return;}lock(true);try{const result=await api(selected?notePath(selected):'/rest/v1/pblm_private_notes',selected?'PATCH':'POST',{title,body});if(!result?.length)throw new Error('A anotação não foi salva. Atualize a lista e tente novamente.');clearEditor();page=0;q('#private-view').value='active';await list();message('Anotação salva na sua conta.');}catch(e){error(e);}finally{lock(false);if(session)updatePager();}});
   q('#private-logout').addEventListener('click',async()=>{if(busy)return;lock(true);let remote=false;try{await raw('/auth/v1/logout?scope=local','POST',null,await access());remote=true;}catch{}finally{clearSession();lock(false);message(remote?'Sessão encerrada.':'Sessão removida desta página. A confirmação de saída no servidor não foi recebida.');}});
