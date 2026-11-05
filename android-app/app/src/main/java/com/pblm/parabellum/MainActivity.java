@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
         options.setJavaScriptCanOpenWindowsAutomatically(false);
         options.setSupportMultipleWindows(false);
         options.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-        options.setSafeBrowsingEnabled(true);
+        if (Build.VERSION.SDK_INT >= 26) options.setSafeBrowsingEnabled(true);
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(browser, false);
 
