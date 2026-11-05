@@ -2,6 +2,7 @@
   'use strict';
   const P=window.PBLM, q=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)], el=P.create;
   let data=null, index=[], deepOpened=false, draft=null, published=null;
+  all('.copy-command').forEach(button=>button.addEventListener('click',()=>P.copy(button.dataset.command)));
   const human={membros:'Integrantes',cargos:'Cargos',noticias:'Notícias',galeria:'Galeria',eventos:'Agenda',recursos:'Materiais',faq:'Ajuda'};
   const searchDialog=q('#search-dialog');
   function buildIndex() {

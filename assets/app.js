@@ -191,14 +191,14 @@ $('#share')?.addEventListener('click',async()=>{
   if(navigator.share){try{await navigator.share({title:'⛧ PARABELLUM',url:siteURL});$('#share-status').textContent='Compartilhamento concluído.';return;}catch(e){if(e.name==='AbortError')return;}}
   await copyValue(siteURL,$('#site-url'),$('#share-status'));
 });
-const routes={explorar:'explorar.html',agenda:'agenda.html',materiais:'materiais.html',favoritos:'favoritos.html',ajuda:'ajuda.html',home:'index.html',membros:'comunidade.html#membros',cargos:'comunidade.html#cargos',regras:'comunidade.html#regras',noticias:'noticias.html',galeria:'galeria.html',ferramentas:'ferramentas.html',terminal:'ferramentas.html#terminal'};
+const routes={python:'python.html',pessoal:'pessoal.html',explorar:'explorar.html',agenda:'agenda.html',materiais:'materiais.html',favoritos:'favoritos.html',ajuda:'ajuda.html',home:'index.html',membros:'comunidade.html#membros',cargos:'comunidade.html#cargos',regras:'comunidade.html#regras',noticias:'noticias.html',galeria:'galeria.html',ferramentas:'ferramentas.html',terminal:'ferramentas.html#terminal'};
 $('#terminal-form')?.addEventListener('submit',e=>{
   e.preventDefault();const raw=$('#command').value.trim();if(!raw)return;
   const c=raw.toLowerCase(),out=$('#output');out.append(element('p','visitor@pblm:~$ '+raw));
   if(c==='clear')out.replaceChildren();
   else if(routes[c])location.assign(routes[c]);
   else {
-    const answers={help:['help, about, date, status, clear, home, membros, cargos, regras, noticias, galeria, ferramentas, terminal, explorar, agenda, materiais, favoritos, ajuda'],about:['⛧ PARABELLUM / PBLM.777 — disciplina, lealdade e respeito.'],date:[new Date().toLocaleString('pt-BR')],status:[content?'Conteúdo carregado: '+content.membros.length+' membro(s), '+content.noticias.length+' notícia(s).':'Conteúdo ainda não carregado.','Terminal local ativo.']};
+    const answers={help:['help, about, date, status, clear, home, membros, cargos, regras, noticias, galeria, ferramentas, terminal, explorar, agenda, materiais, favoritos, ajuda, python, pessoal'],about:['⛧ PARABELLUM / PBLM.777 — disciplina, lealdade e respeito.'],date:[new Date().toLocaleString('pt-BR')],status:[content?'Conteúdo carregado: '+content.membros.length+' membro(s), '+content.noticias.length+' notícia(s).':'Conteúdo ainda não carregado.','Terminal local ativo.']};
     (answers[c]||['Comando desconhecido. Digite help.']).forEach(line=>out.append(element('p',line)));
   }
   while(out.children.length>100)out.firstElementChild.remove();

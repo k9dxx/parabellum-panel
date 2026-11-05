@@ -54,3 +54,11 @@ O editor em painel.html permite criar, editar, remover, importar e exportar regi
 O JSON deve incluir eventos, recursos e faq, além das listas originais. Eventos usam inicio/fim em ISO 8601 com fuso (por exemplo 2026-11-15T19:00:00-03:00), titulo, descricao e local. A agenda começa vazia. O exportador ICS converte para UTC, escapa texto e dobra linhas por tamanho UTF-8.
 
 Os arquivos de download ficam em assets/downloads. O kit visual contém os três SVGs da galeria. O sitemap contém as páginas públicas; favoritos, preferências, editor e 404 usam noindex.
+
+## Python / Termux e dados pessoais
+
+`python.html` apresenta a ferramenta `tools/pblm.py`, que funciona com a biblioteca padrão do Python. Consultas e backups acessam apenas o JSON público; não incluem anotações pessoais. O comando senha usa secrets e roda localmente. A gravação de arquivos recusa sobrescrever sem --sobrescrever.
+
+`pessoal.html` e `assets/private.js` preparam login e CRUD de anotações por conta em Supabase. A configuração permanece desativada em assets/private-config.json até conectar o serviço, aplicar a migração e testar RLS com dois usuários. A migração e as etapas estão em supabase/README.md. Esta entrega não deve ser descrita como área pessoal ativa antes dessa validação.
+
+Anotações pessoais nunca devem ser colocadas em data/conteudo.json, issues públicas, localStorage de rascunhos ou no repositório. A busca geral e a ferramenta Python não consultam a tabela privada.
