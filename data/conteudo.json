@@ -1,0 +1,61 @@
+{
+  "membros": [
+    {
+      "nome": "k9",
+      "cargo": "fundador",
+      "descricao": "Criador da PARABELLUM e responsável pelo portal.",
+      "instagram": "https://www.instagram.com/k9.shonkz_/"
+    }
+  ],
+  "cargos": [
+    {
+      "id": "fundador",
+      "nome": "Fundador",
+      "descricao": "Define a identidade da comunidade e organiza o projeto."
+    },
+    {
+      "id": "administracao",
+      "nome": "Administração",
+      "descricao": "Organiza atividades, modera a comunidade e cuida dos comunicados."
+    },
+    {
+      "id": "membro",
+      "nome": "Membro",
+      "descricao": "Participa da comunidade e segue seus princípios."
+    }
+  ],
+  "noticias": [
+    {
+      "id": "novo-portal",
+      "titulo": "Um novo espaço para a PARABELLUM",
+      "categoria": "Portal",
+      "data": "2026-11-04",
+      "resumo": "Identidade, comunidade e ferramentas reunidas em um portal com páginas próprias.",
+      "paragrafos": [
+        "O portal PARABELLUM reúne o diretório da comunidade, os cargos e os princípios em uma área dedicada.",
+        "A galeria traz três artes vetoriais para visualizar e baixar. As ferramentas funcionam diretamente no navegador, incluindo gerador de senhas, contador de texto e um terminal de comandos locais.",
+        "O conteúdo público é mantido no repositório oficial. Pedidos de entrada passam pela revisão da administração antes de aparecer no diretório."
+      ]
+    }
+  ],
+  "galeria": [
+    {
+      "id": "monograma",
+      "titulo": "Monograma PBLM",
+      "categoria": "Emblema",
+      "arquivo": "assets/artes/monograma.svg"
+    },
+    {
+      "id": "legacy",
+      "titulo": "Legacy 777",
+      "categoria": "Tipografia",
+      "arquivo": "assets/artes/legacy.svg"
+    },
+    {
+      "id": "principios",
+      "titulo": "Disciplina. Lealdade. Respeito.",
+      "categoria": "Manifesto",
+      "arquivo": "assets/artes/principios.svg"
+    }
+  ]
+}
