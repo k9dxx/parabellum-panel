@@ -66,7 +66,6 @@
     return lines.map(line=>{let result='',row='',bytes=0;for(const char of line){const n=new TextEncoder().encode(char).length;if(bytes+n>70){result+=row+'\r\n';row=' ';bytes=1;}row+=char;bytes+=n;}return result+row;}).join('\r\n')+'\r\n';
   }
   window.PBLM={labels,routes,schemas,create,slug,recordId,read,write,toast,favorites,isSaved,saveButton,sharing,itemLink,download,copy,safeFile,validate,preferences,applyPreferences,ics,refreshSaveButtons};
-}
   /* PBLM-PORTAL-UPDATE-20261105 */
   // Progressive enhancement of the existing portal. No new homepage or OS.
   function upgradePortal() {
