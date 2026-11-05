@@ -125,6 +125,7 @@ public class MainActivity extends Activity {
 
         if (state == null) browser.loadUrl(HOME);
         else browser.restoreState(state);
+        new UpdateChecker(this).check();
     }
 
     private boolean isPortal(Uri url) {
