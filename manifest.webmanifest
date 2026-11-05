@@ -1,0 +1,63 @@
+{
+  "id": "/parabellum-panel/",
+  "name": "PARABELLUM — PBLM.777",
+  "short_name": "PARABELLUM",
+  "description": "Portal oficial da comunidade PARABELLUM: membros, notícias, agenda, galeria e ferramentas.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/parabellum-panel/",
+  "scope": "/parabellum-panel/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#d21b35",
+  "icons": [
+    {
+      "src": "assets/icons/pblm-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/pblm-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Comunidade",
+      "short_name": "Membros",
+      "url": "/parabellum-panel/comunidade.html",
+      "icons": [
+        {
+          "src": "assets/icons/pblm-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Notícias",
+      "url": "/parabellum-panel/noticias.html",
+      "icons": [
+        {
+          "src": "assets/icons/pblm-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Preferências",
+      "url": "/parabellum-panel/preferencias.html",
+      "icons": [
+        {
+          "src": "assets/icons/pblm-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
