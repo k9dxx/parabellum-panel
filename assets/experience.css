@@ -45,6 +45,8 @@ html.pblm-experience-motion .pblm-reveal{
   transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.78,.2,1)
 }
 html.pblm-experience-motion .pblm-reveal.pblm-visible{opacity:1;transform:none}
+html.pblm-soft-motion .hero h1,html.pblm-soft-motion .page-intro h1{animation-duration:420ms}
+html.pblm-soft-motion .pblm-reveal{transform:translateY(9px);transition-duration:350ms}
 @media(hover:hover) and (pointer:fine){
   html.pblm-experience-motion .feature-card:hover,
   html.pblm-experience-motion .discovery-card:hover{transform:translateY(-4px);box-shadow:0 14px 38px #0006}
