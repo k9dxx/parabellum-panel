@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.os.Build;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.view.Gravity;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.net.Uri;
 import android.view.View;
 import android.view.WindowInsets;
@@ -29,6 +34,9 @@ public class MainActivity extends Activity {
     private WebView browser;
     private ProgressBar progress;
     private ValueCallback<Uri[]> fileCallback;
+    private LinearLayout nativeBar;
+    private TextView brandText;
+    private Button settingsButton;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -46,15 +54,50 @@ public class MainActivity extends Activity {
             });
         }
 
+        LinearLayout shell = new LinearLayout(this);
+        shell.setOrientation(LinearLayout.VERTICAL);
+        root.addView(shell, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        nativeBar = new LinearLayout(this);
+        nativeBar.setOrientation(LinearLayout.HORIZONTAL);
+        nativeBar.setGravity(Gravity.CENTER_VERTICAL);
+        nativeBar.setPadding(dp(14), 0, dp(8), 0);
+        shell.addView(nativeBar, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(51)));
+
+        brandText = new TextView(this);
+        brandText.setText("⛧  PARABELLUM");
+        brandText.setTextSize(16);
+        brandText.setTypeface(null, 1);
+        brandText.setLetterSpacing(.11f);
+        nativeBar.addView(brandText, new LinearLayout.LayoutParams(0,
+                ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+
+        Button refresh = chromeButton("↻", "Atualizar portal");
+        nativeBar.addView(refresh, new LinearLayout.LayoutParams(dp(44), dp(43)));
+        refresh.setOnClickListener(v -> { if (browser != null) browser.reload(); });
+
+        settingsButton = chromeButton("⚙", "Personalizar aplicativo");
+        nativeBar.addView(settingsButton, new LinearLayout.LayoutParams(dp(44), dp(43)));
+        settingsButton.setOnClickListener(v -> AppPersonalizer.show(this));
+        applyNativeTheme();
+
+        FrameLayout webpage = new FrameLayout(this);
+        shell.addView(webpage, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
+
         browser = new WebView(this);
         browser.setBackgroundColor(Color.rgb(8, 8, 8));
         browser.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        root.addView(browser, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        webpage.addView(browser, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         progress = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         progress.setMax(100);
-        FrameLayout.LayoutParams bar = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 5);
-        root.addView(progress, bar);
+        FrameLayout.LayoutParams bar = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(3), Gravity.TOP);
+        webpage.addView(progress, bar);
 
         WebSettings options = browser.getSettings();
         options.setJavaScriptEnabled(true); // Requerido pelas funcionalidades existentes do portal.
@@ -126,6 +169,40 @@ public class MainActivity extends Activity {
         if (state == null) browser.loadUrl(HOME);
         else browser.restoreState(state);
         new UpdateChecker(this).check();
+        if (state == null) PblmIntro.show(this, root);
+    }
+
+    private int dp(int n) {
+        return (int) (n * getResources().getDisplayMetrics().density + 0.5f);
+    }
+
+    private Button chromeButton(String title, String description) {
+        Button button = new Button(this);
+        button.setAllCaps(false);
+        button.setText(title);
+        button.setTextSize(23);
+        button.setTextColor(Color.WHITE);
+        button.setPadding(0, 0, 0, 0);
+        button.setContentDescription(description);
+        return button;
+    }
+
+    public void applyNativeTheme() {
+        if (nativeBar == null) return;
+        int accent = AppPersonalizer.accent(this);
+        GradientDrawable background = new GradientDrawable(
+                GradientDrawable.Orientation.LEFT_RIGHT,
+                new int[]{0xff0b090d, 0xff22121a, 0xff0b090d});
+        background.setStroke(dp(1), accent);
+        nativeBar.setBackground(background);
+        if (brandText != null) brandText.setTextColor(accent);
+        if (settingsButton != null) settingsButton.setTextColor(accent);
+        getWindow().setStatusBarColor(0xff080808);
+        getWindow().setNavigationBarColor(0xff080808);
+    }
+
+    public void openWebPreferences() {
+        if (browser != null) browser.loadUrl(HOME + "preferencias.html");
     }
 
     private boolean isPortal(Uri url) {
@@ -147,6 +224,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppPersonalizer.IMAGE_REQUEST) {
+            if (resultCode == RESULT_OK && data != null) {
+                AppPersonalizer.onImageSelected(this, data.getData());
+            }
+            return;
+        }
         if (requestCode == FILE_PICKER_REQUEST && fileCallback != null) {
             fileCallback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data));
             fileCallback = null;
