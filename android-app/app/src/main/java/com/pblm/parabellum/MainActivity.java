@@ -1,6 +1,15 @@
 package com.pblm.parabellum;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
+import android.view.HapticFeedbackConstants;
+import java.util.Arrays;
 import android.os.Bundle;
 import android.os.Build;
 import android.content.Intent;
@@ -80,7 +89,10 @@ public class MainActivity extends Activity {
 
         settingsButton = chromeButton("⚙", "Personalizar aplicativo");
         nativeBar.addView(settingsButton, new LinearLayout.LayoutParams(dp(44), dp(43)));
-        settingsButton.setOnClickListener(v -> AppPersonalizer.show(this));
+        settingsButton.setOnClickListener(v -> {
+            if (AppPersonalizer.haptics(this)) v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            AppPersonalizer.show(this);
+        });
         applyNativeTheme();
 
         FrameLayout webpage = new FrameLayout(this);
@@ -166,10 +178,67 @@ public class MainActivity extends Activity {
             } catch (Exception ignored) { }
         });
 
-        if (state == null) browser.loadUrl(HOME);
+        if (state == null) browser.loadUrl(resolveTarget(getIntent()));
         else browser.restoreState(state);
+        installShortcuts();
+        handleSharedText(getIntent());
         new UpdateChecker(this).check();
         if (state == null) PblmIntro.show(this, root);
+    }
+
+    private String resolveTarget(Intent intent) {
+        if (intent == null) return HOME;
+        Uri uri = intent.getData();
+        if (isPortal(uri)) return uri.toString();
+        return HOME;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        if (browser != null && isPortal(intent.getData())) browser.loadUrl(intent.getDataString());
+        handleSharedText(intent);
+    }
+
+    private void handleSharedText(Intent intent) {
+        if (intent == null || !Intent.ACTION_SEND.equals(intent.getAction())) return;
+        if (!"text/plain".equals(intent.getType())) return;
+        String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (text == null || text.trim().isEmpty()) return;
+        final String value = text.length() > 3000 ? text.substring(0, 3000) : text;
+        new AlertDialog.Builder(this)
+            .setTitle("⛧ Compartilhar com PARABELLUM")
+            .setMessage("Deseja copiar o texto compartilhado e abrir a Área pessoal? Você decide se deseja publicá-lo.")
+            .setPositiveButton("Copiar e abrir", (dialog, which) -> {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setPrimaryClip(ClipData.newPlainText("Compartilhamento PBLM", value));
+                if (browser != null) browser.loadUrl(HOME + "pessoal.html#community-editor");
+            })
+            .setNegativeButton("Cancelar", null)
+            .show();
+    }
+
+    private void installShortcuts() {
+        if (Build.VERSION.SDK_INT < 25) return;
+        ShortcutManager manager = getSystemService(ShortcutManager.class);
+        if (manager == null) return;
+        try {
+            String[] paths = {"comunidade.html", "preferencias.html", "noticias.html"};
+            String[] names = {"Comunidade", "Personalizar", "Notícias"};
+            ShortcutInfo[] shortcuts = new ShortcutInfo[paths.length];
+            for (int i = 0; i < paths.length; i++) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(HOME + paths[i]));
+                shortcuts[i] = new ShortcutInfo.Builder(this, "pblm-nav-" + i)
+                    .setShortLabel(names[i])
+                    .setLongLabel("PARABELLUM — " + names[i])
+                    .setIcon(Icon.createWithResource(this, R.drawable.pblm_icon))
+                    .setIntent(intent).build();
+            }
+            manager.setDynamicShortcuts(Arrays.asList(shortcuts));
+        } catch (Exception ignored) { }
     }
 
     private int dp(int n) {
