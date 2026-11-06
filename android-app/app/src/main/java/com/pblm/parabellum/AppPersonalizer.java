@@ -58,6 +58,10 @@ public final class AppPersonalizer {
         return preferences(context).getBoolean("glow", true);
     }
 
+    static boolean haptics(Context context) {
+        return preferences(context).getBoolean("haptics", true);
+    }
+
     static Bitmap loadBrand(Context context) {
         File file = new File(context.getFilesDir(), ICON);
         if (!file.isFile()) return null;
@@ -187,6 +191,15 @@ public final class AppPersonalizer {
         layout.addView(shine);
         shine.setOnCheckedChangeListener((v, checked) ->
                 preferences(activity).edit().putBoolean("glow", checked).apply());
+        addGap(layout, activity, 6);
+        Switch tactile = new Switch(activity);
+        tactile.setText("Feedback tátil nos botões");
+        tactile.setTextSize(15);
+        tactile.setTextColor(Color.WHITE);
+        tactile.setChecked(haptics(activity));
+        layout.addView(tactile);
+        tactile.setOnCheckedChangeListener((v, checked) ->
+                preferences(activity).edit().putBoolean("haptics", checked).apply());
         layout.addView(text(activity, "Essas opções serão aplicadas na próxima abertura do aplicativo.", 11, 0xff9b8290));
         addGap(layout, activity, 20);
 
