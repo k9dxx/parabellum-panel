@@ -153,6 +153,12 @@ async function loadChat(){
     const p=lookup.get(message.owner_id);
     const item=el('article',undefined,'social-chat-message');
     item.append(el('small',(p?.display_name||'Integrante')+' · '+dateLabel(message.created_at)),el('p',message.body));
+    const report=el('a','Reportar ↗','social-small-button');report.target='_blank';report.rel='noopener noreferrer';
+    report.href='https://github.com/k9dxx/parabellum-panel/issues/new?'+new URLSearchParams({
+      title:'Moderação de mensagem pública '+message.id,
+      body:'Solicito revisão da mensagem pública '+message.id+' no canal '+channel+'.\nMotivo (não inclua dados pessoais): '
+    });
+    item.append(report);
     if(auth?.userId===message.owner_id){
       const del=el('button','Excluir','social-small-button');del.type='button';
       del.onclick=async()=>{try{await privateRest('pblm_chat_messages',{id:'eq.'+message.id},'DELETE');await loadChat();}catch{notify('Não foi possível excluir.')}};
