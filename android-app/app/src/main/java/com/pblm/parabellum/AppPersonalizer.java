@@ -220,6 +220,19 @@ public final class AppPersonalizer {
         layout.addView(text(activity,
                 "A foto aparece na entrada do app e pode ser usada num NOVO atalho na tela inicial. O Android não permite trocar o ícone original do APK por uma foto arbitrária sem recriar/assinar o aplicativo.",
                 11, 0xffc6adbb));
+        addGap(layout, activity, 8);
+        Button restore = button(activity, "↶  RESTAURAR EMBLEMA ORIGINAL");
+        layout.addView(restore, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(activity, 44)));
+        restore.setOnClickListener(v -> {
+            File file = new File(activity.getFilesDir(), ICON);
+            if (file.exists() && !file.delete()) {
+                Toast.makeText(activity, "Não foi possível restaurar a imagem.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            preview.setImageResource(R.drawable.pblm_icon);
+            Toast.makeText(activity, "Emblema padrão restaurado.", Toast.LENGTH_SHORT).show();
+        });
         addGap(layout, activity, 18);
 
         Button portal = button(activity, "⚙  PERSONALIZAR O PORTAL");
