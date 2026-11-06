@@ -1,0 +1,27 @@
+/* ⛧ PBLM Studio: visual-only customization inside existing Preferences */
+#pblm-studio{border:1px solid #814158;background:linear-gradient(140deg,#24111b,#0b0a0d);border-radius:22px;padding:25px;margin:20px 0;position:relative;overflow:hidden}
+#pblm-studio::before{content:"777";position:absolute;right:-15px;top:-65px;font:italic 900 170px Georgia;color:#e21d320b;pointer-events:none}
+#pblm-studio h2{color:var(--accent,#e21d32);font-size:24px;letter-spacing:-.5px}
+#pblm-studio h3{margin:18px 0 9px;font-size:17px;color:#f7dce6}
+#pblm-studio .studio-sub{font-size:12px;color:#bba7b1}
+#pblm-studio .studio-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#pblm-studio .studio-preset{border:1px solid #743449;background:linear-gradient(135deg,#1a1218,#09090b);border-radius:12px;min-height:85px;padding:12px;color:#fff;text-align:left;cursor:pointer}
+#pblm-studio .studio-preset:hover{border-color:var(--accent,#e21d32)}
+#pblm-studio .studio-preset i{display:block;width:90%;height:8px;margin-bottom:12px;border-radius:4px;background:var(--preview-color)}
+#pblm-studio .studio-preset b{font-size:12px;display:block}
+#pblm-studio .studio-preset small{color:#c7abb9;font-size:10px}
+#pblm-studio .studio-tools{display:flex;gap:9px;flex-wrap:wrap}
+#pblm-studio button{min-height:44px;cursor:pointer}
+#pblm-studio .studio-text{width:100%;font:12px/1.5 ui-monospace,monospace;color:#ffdee6;background:#09080b;border:1px solid #7d344d;border-radius:12px;min-height:90px;padding:10px}
+#pblm-studio .studio-preview{padding:16px;border:1px solid var(--accent,#e21d32);border-radius:14px;max-width:520px;margin:16px auto;background:linear-gradient(140deg,#160911,#0b080c);color:#fff}
+#pblm-studio .studio-preview b{color:var(--accent,#e21d32);letter-spacing:2px}
+#pblm-studio .studio-preview p{font-size:13px;color:#d6b8c7}
+#pblm-studio .studio-preview .studio-signature{border-top:1px solid #ffffff20;margin-top:13px;padding-top:13px;display:flex;align-items:center;gap:14px}
+#pblm-studio .studio-avatar{border-radius:14px;background:var(--accent,#e21d32);height:60px;width:60px;display:grid;place-items:center;color:white;font:bold 32px Georgia}
+#pblm-studio .studio-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#pblm-studio .studio-inputs label{margin-top:6px}
+#pblm-studio .studio-inputs input,#pblm-studio .studio-inputs textarea{width:100%;border-radius:8px;border:1px solid #5c3041;background:#100c12;color:#fff;padding:11px}
+#pblm-studio .studio-inputs textarea{min-height:70px}
+#pblm-studio .studio-status{font-size:12px;min-height:20px;color:#ffc2d4}
+@media(max-width:600px){#pblm-studio{padding:16px}#pblm-studio .studio-presets{grid-template-columns:repeat(2,minmax(0,1fr))}#pblm-studio .studio-inputs{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#pblm-studio *{animation:none!important;transition:none!important}}
