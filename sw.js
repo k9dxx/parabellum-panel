@@ -1,5 +1,5 @@
 'use strict';
-const VERSION = 'pblm-pwa-20261105-v1';
+const VERSION = 'pblm-pwa-20261106-v2';
 const CACHE = 'pblm-shell-' + VERSION;
 const BASE = '/parabellum-panel/';
 const SHELL = [
@@ -10,7 +10,10 @@ const SHELL = [
   BASE + 'assets/core.js?v=20261105-1',
   BASE + 'assets/app.js?v=20261104-3',
   BASE + 'assets/portal.js?v=20261104-3',
-  BASE + 'assets/pwa-register.js', BASE + 'data/conteudo.json'
+  BASE + 'assets/pwa-register.js',
+  BASE + 'assets/experience.js?v=20261106-1',
+  BASE + 'assets/experience.css?v=20261106-1',
+  BASE + 'data/conteudo.json'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
