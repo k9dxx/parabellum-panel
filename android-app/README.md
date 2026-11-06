@@ -58,15 +58,15 @@ gh secret list -R k9dxx/parabellum-panel
 O arquivo `android-app/version.properties` controla a versão:
 
 ```properties
-VERSION_CODE=2
-VERSION_NAME=1.0.1
+VERSION_CODE=3
+VERSION_NAME=1.1.0
 ```
 
-A primeira release oficial está prevista como **v1.0.1, código 2**. Para a próxima versão, aumente **AMBOS** os campos, por exemplo:
+A versão de personalização está preparada como **v1.1.0, código 3**. Para a próxima versão, aumente **AMBOS** os campos, por exemplo:
 
 ```properties
-VERSION_CODE=3
-VERSION_NAME=1.0.2
+VERSION_CODE=4
+VERSION_NAME=1.1.1
 ```
 
 O Android exige aumento de `VERSION_CODE` e mesma identidade e assinatura para atualização por cima. `VERSION_NAME` é o identificador legível para membros e GitHub Releases.
@@ -104,3 +104,35 @@ O workflow release é **manual**, executado apenas na branch `main`, sem usar se
 A keystore fica temporariamente no runner e é apagada ao terminar. O arquivo permanente permanece no Termux do proprietário e seus backups privados.
 O APK assinado abre apenas o portal HTTPS oficial no WebView; sites externos abrem no navegador.
 A verificação de updates não concede permissões para instalação silenciosa.
+
+## Novidade: personalização 1.1.0
+
+O **mesmo aplicativo Android oficial** ganhou uma barra superior nativa com botão ⚙.
+Na nova central de personalização, cada pessoa poderá:
+
+- Escolher entre sete cores ou aplicar sua cor personalizada no formato `#RRGGBB`.
+- Ligar/desligar a entrada animada e o brilho do emblema.
+- Escolher uma imagem da galeria para aparecer na animação de abertura.
+- Criar um **atalho com foto personalizada na tela inicial**, se o launcher suportar.
+- Voltar ao emblema original a qualquer momento.
+- Abrir as Preferências do portal (bordas, cards, densidade, animações e papel de parede local).
+
+**Atenção à diferença entre atalho e ícone original:**
+o Android não permite mudar o ícone principal de um APK instalado para uma foto arbitrária em tempo real.
+A foto escolhida no app muda a apresentação e o ícone de um **atalho adicional** na tela inicial.
+O launcher pode pedir aprovação para fixar esse atalho.
+O ícone original do APK continuará o mesmo.
+
+Se quiser atualizar o **ícone oficial do aplicativo para todos os membros**,
+há um script de publicação que recebe uma foto do celular:
+
+```bash
+pkg install imagemagick git -y
+curl -fsSL https://raw.githubusercontent.com/k9dxx/parabellum-panel/main/android-app/scripts/mudar-icone-oficial-termux.sh -o ~/mudar-icone-oficial-termux.sh
+cat ~/mudar-icone-oficial-termux.sh
+bash ~/mudar-icone-oficial-termux.sh /sdcard/Download/minha-foto.png
+```
+
+O script edita **somente os ícones oficiais**, mostra o diff e pede confirmação antes de enviar alterações.
+Para a imagem chegar ao ícone do APK instalado, publique uma **nova versão release assinada com a mesma keystore**,
+aumentando `VERSION_CODE` e `VERSION_NAME`. A foto do ícone oficial afeta todos que instalarem a nova versão.
