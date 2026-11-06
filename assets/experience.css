@@ -1,0 +1,66 @@
+/* PARABELLUM Experience 2026-11-06 — efeitos opcionais, sem alterar a identidade original */
+html.pblm-rounded .panel,
+html.pblm-rounded .discovery-card,
+html.pblm-rounded .result-row,
+html.pblm-rounded .faq-item,
+html.pblm-rounded .button,
+html.pblm-rounded .search-bar {border-radius:18px}
+html.pblm-rounded .button{border-radius:11px}
+html.pblm-soft .panel,
+html.pblm-soft .discovery-card,
+html.pblm-soft .result-row {border-radius:8px}
+html.pblm-compact .panel{padding:15px}
+html.pblm-compact .section{padding-top:30px;padding-bottom:30px}
+html.pblm-compact .grid{gap:9px}
+html.pblm-compact .discovery-card{min-height:155px;padding:20px}
+html.pblm-glass .panel,
+html.pblm-glass .discovery-card,
+html.pblm-glass .result-row{
+  background:linear-gradient(125deg,#28121dca,#0c080bdc);
+  border-color:color-mix(in srgb,var(--red,#e21d32) 30%,#262026);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px)
+}
+html.pblm-theme-light.pblm-glass .panel,
+html.pblm-theme-light.pblm-glass .discovery-card,
+html.pblm-theme-light.pblm-glass .result-row{background:#fffcfbe8}
+html.pblm-wallpaper body{
+  background-image:linear-gradient(115deg,rgba(5,3,6,.88),rgba(15,3,12,.77)),var(--pblm-wallpaper);
+  background-attachment:fixed;background-size:cover;background-position:center
+}
+html.pblm-wallpaper main{background:transparent}
+html.pblm-wallpaper .section{background:#080509c7}
+html.pblm-theme-light.pblm-wallpaper body{
+  background-image:linear-gradient(115deg,rgba(248,244,246,.88),rgba(252,243,247,.84)),var(--pblm-wallpaper)
+}
+html.pblm-theme-light.pblm-wallpaper .section{background:#fcf7f8e0}
+html.pblm-experience-motion .hero h1,
+html.pblm-experience-motion .page-intro h1{animation:pblm-heading-enter 850ms cubic-bezier(.2,.8,.2,1) both}
+@keyframes pblm-heading-enter{
+  from{opacity:0;transform:translateY(22px);filter:blur(5px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+html.pblm-experience-motion .pblm-reveal{
+  opacity:0;transform:translateY(24px) scale(.985);
+  transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.78,.2,1)
+}
+html.pblm-experience-motion .pblm-reveal.pblm-visible{opacity:1;transform:none}
+@media(hover:hover) and (pointer:fine){
+  html.pblm-experience-motion .feature-card:hover,
+  html.pblm-experience-motion .discovery-card:hover{transform:translateY(-4px);box-shadow:0 14px 38px #0006}
+}
+.pblm-exp-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pblm-exp-row label{margin:4px 0}
+.pblm-exp-row select{margin-top:8px}
+.pblm-exp-wallpaper-preview{width:100%;height:145px;border:1px solid #ffffff35;border-radius:12px;object-fit:cover;background:linear-gradient(130deg,#32111d,#09090c)}
+.pblm-exp-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pblm-exp-actions .btn{min-height:44px}
+.pblm-exp-tip{font-size:12px;color:#bca7b2;line-height:1.7}
+@media(max-width:600px){.pblm-exp-row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+  html.pblm-experience-motion .pblm-reveal{opacity:1!important;transform:none!important;transition:none!important}
+  html.pblm-experience-motion .hero h1,
+  html.pblm-experience-motion .page-intro h1{animation:none!important}
+}
+html.pblm-no-motion .pblm-reveal,
+html.reduce-motion .pblm-reveal{opacity:1!important;transform:none!important;transition:none!important}
