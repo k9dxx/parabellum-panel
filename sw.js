@@ -1,5 +1,5 @@
 'use strict';
-const VERSION = 'pblm-pwa-20261106-v4';
+const VERSION = 'pblm-pwa-20261106-v5';
 const CACHE = 'pblm-shell-' + VERSION;
 const BASE = '/parabellum-panel/';
 const SHELL = [
@@ -14,8 +14,10 @@ const SHELL = [
   BASE + 'assets/experience.js?v=20261106-2',
   BASE + 'assets/pblm-studio.js?v=20261106-1',
   BASE + 'assets/pblm-studio.css?v=20261106-1',
-  BASE + 'assets/social-hub.js?v=20261106-1',
+  BASE + 'assets/social-hub.js?v=20261106-2',
   BASE + 'assets/social-hub.css?v=20261106-1',
+  BASE + 'assets/pblm-guide.js?v=20261106-1',
+  BASE + 'assets/pblm-guide.css?v=20261106-1',
   BASE + 'assets/experience.css?v=20261106-2',
   BASE + 'data/conteudo.json'
 ];
