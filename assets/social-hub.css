@@ -1,0 +1,44 @@
+/* PBLM SOCIAL HUB 2026 */
+.social-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.social-panel{border:1px solid #543040;background:linear-gradient(140deg,#1a1017,#0a080b);padding:24px;border-radius:14px;margin:18px 0;min-width:0}
+.social-panel h2,.social-panel h3{margin:0 0 14px;font-size:clamp(20px,3vw,28px)}
+.social-panel label{display:block;color:#e4cad3;margin:12px 0;font-size:13px}
+.social-panel input:not([type=checkbox]),.social-panel textarea,.social-panel select{
+ width:100%;background:#0d0b0e;border:1px solid #573345;border-radius:9px;min-height:42px;padding:11px;color:#fff;display:block;margin-top:5px
+}
+.social-panel input[type=color]{height:42px;padding:3px;max-width:100px}
+.social-panel textarea{min-height:92px;resize:vertical}
+.social-status{font-size:12px;color:#e3acc0;min-height:25px}
+.social-directory{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.social-person{padding:17px;background:#130d14;border:1px solid #49313d;border-radius:12px;min-width:0}
+.social-person-head{display:flex;align-items:center;gap:11px}
+.social-person-head strong{display:block;overflow-wrap:anywhere}
+.social-person-head small{color:#b9a0aa}
+.social-avatar{border:2px solid #ffffff24;display:grid;place-items:center;flex:none;width:49px;height:49px;border-radius:12px;font-weight:800;color:#fff;position:relative;overflow:hidden}
+.social-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.social-person p{font-size:12px;line-height:1.5;color:#c6aeb7}
+.social-actions{display:flex;flex-wrap:wrap;gap:8px}
+.social-actions button,.social-small-button{background:#32151f;color:#f6dbe4;border:1px solid #6f2940;border-radius:9px;padding:8px 10px;font-size:11px;min-height:38px}
+.social-actions button:hover{border-color:var(--red)}
+.social-rank-row{display:flex;gap:12px;align-items:center;border-bottom:1px solid #4d303c;padding:13px 3px;font-size:13px}
+.social-rank-row b{color:#aa8795}.social-rank-row span{flex:1;min-width:0;overflow-wrap:anywhere}
+.social-chat-list{height:min(54vh,430px);min-height:250px;overflow:auto;border:1px solid #422938;background:#0a090d;padding:12px;border-radius:12px;display:flex;flex-direction:column;gap:12px}
+.social-chat-message{border:1px solid #3e2936;background:#1a1118;border-radius:10px;padding:10px 13px;max-width:100%;overflow-wrap:anywhere}
+.social-chat-message small{color:#bca0ac;font-size:10px;letter-spacing:.3px}
+.social-chat-message p{margin:6px 0;color:#f4e6eb;white-space:pre-wrap;font-size:13px}
+.social-chat-message.social-own{background:#351322;border-color:#92314d}
+.social-chat-form{display:flex;gap:8px;margin-top:12px;align-items:flex-end}
+.social-chat-form textarea{flex:1}
+.social-chat-form button{min-height:46px}
+.social-identity-dialog{border:1px solid #8b3551;background:#130a11;color:#fff;border-radius:16px;max-width:min(520px,94vw);width:480px;padding:20px}
+.social-identity-dialog::backdrop{background:#000c;backdrop-filter:blur(5px)}
+.social-id-head{height:155px;border:2px solid #e21d32;border-radius:14px;position:relative;background:linear-gradient(115deg,#401323,#0a080b);margin-bottom:44px}
+.social-banner{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.social-id-avatar{position:absolute;bottom:-35px;left:18px;border-radius:18px;border:3px solid #100b0f;width:76px;height:76px;display:grid;place-items:center;font-size:34px;font-weight:900}
+.social-identity-dialog h2{font-size:27px;margin:12px 0}
+.social-identity-dialog p{overflow-wrap:anywhere}
+.social-identity-dialog button{margin-top:12px;min-height:43px}
+.social-profile-form .social-grid{gap:12px}
+.social-personal-panel[hidden],.social-chat-form[hidden],#social-dm[hidden]{display:none}
+@media(max-width:700px){.social-grid{grid-template-columns:1fr}.social-panel{padding:16px}.social-chat-form{flex-direction:column;align-items:stretch}.social-chat-form textarea{width:100%}.social-identity-dialog{padding:15px}}
+@media(prefers-reduced-motion:no-preference){.social-person{transition:transform .2s ease,border-color .2s ease}.social-person:hover{transform:translateY(-2px);border-color:var(--red)}}
