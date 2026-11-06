@@ -40,6 +40,8 @@
     root.classList.toggle('pblm-compact',p.density==='compact');
     root.classList.toggle('pblm-glass',p.cards==='glass');
     root.classList.toggle('pblm-experience-motion',p.animation!=='off'&&legacyMotion()&&!reduced);
+    root.classList.toggle('pblm-soft-motion',p.animation==='soft'&&legacyMotion()&&!reduced);
+    root.classList.toggle('pblm-cinematic-motion',p.animation==='cinematic'&&legacyMotion()&&!reduced);
     root.classList.toggle('pblm-wallpaper',Boolean(wallpaperUrl)&&p.wallpaper);
     root.style.setProperty('--pblm-wallpaper',wallpaperUrl?'url("'+wallpaperUrl+'")':'none');
   }
