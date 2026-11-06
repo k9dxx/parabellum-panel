@@ -129,7 +129,9 @@ async function loadRank(){
   target.replaceChildren();
   for(const [index,p] of ranks.entries()){
     const row=el('div',undefined,'social-rank-row');const pos=el('b',String(index+1).padStart(2,'0'));
-    const name=el('span',p.display_name+' · @'+p.handle);
+    const level=1+Math.floor(Math.max(0,Number(p.xp)||0)/100);
+    const medal=level>=10?'⛧ LEGEND':level>=5?'✦ ELITE':level>=3?'◆ VETERANO':'✧ MEMBRO';
+    const name=el('span',p.display_name+' · @'+p.handle+' · NÍVEL '+level+' · '+medal);
     const score=el('strong',p.xp+' XP');score.style.color=p.accent||'#e21d32';
     row.append(pos,name,score);target.append(row);
   }
