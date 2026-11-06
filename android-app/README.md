@@ -58,15 +58,15 @@ gh secret list -R k9dxx/parabellum-panel
 O arquivo `android-app/version.properties` controla a versão:
 
 ```properties
-VERSION_CODE=3
-VERSION_NAME=1.1.0
+VERSION_CODE=4
+VERSION_NAME=1.2.0
 ```
 
-A versão de personalização está preparada como **v1.1.0, código 3**. Para a próxima versão, aumente **AMBOS** os campos, por exemplo:
+A versão integrada está preparada como **v1.2.0, código 4**. Para a próxima versão, aumente **AMBOS** os campos, por exemplo:
 
 ```properties
-VERSION_CODE=4
-VERSION_NAME=1.1.1
+VERSION_CODE=5
+VERSION_NAME=1.2.1
 ```
 
 O Android exige aumento de `VERSION_CODE` e mesma identidade e assinatura para atualização por cima. `VERSION_NAME` é o identificador legível para membros e GitHub Releases.
@@ -136,3 +136,32 @@ bash ~/mudar-icone-oficial-termux.sh /sdcard/Download/minha-foto.png
 O script edita **somente os ícones oficiais**, mostra o diff e pede confirmação antes de enviar alterações.
 Para a imagem chegar ao ícone do APK instalado, publique uma **nova versão release assinada com a mesma keystore**,
 aumentando `VERSION_CODE` e `VERSION_NAME`. A foto do ícone oficial afeta todos que instalarem a nova versão.
+
+## Novidade: integração 1.2.0
+
+Os módulos abaixo ampliam o **mesmo PARABELLUM** — não criam outra homepage.
+
+### Portal web e PWA
+- **PBLM Studio:** temas compartilháveis por código e cartões de assinatura locais.
+- **Perfis sociais:** apelido, biografia, cor, banner e avatar por URL HTTPS.
+- **Seguidores:** seguir outros perfis públicos.
+- **Mural existente:** publicações, curtidas e comentários continuam funcionando.
+- **Ranking:** XP calculado no banco, com níveis e medalhas visuais.
+- **Canais:** conversas públicas Comunidade, Projetos e Jogos, com intervalo mínimo entre mensagens.
+- **Mensagens privadas:** leitura e escrita restritas aos participantes por RLS; sem criptografia ponta a ponta.
+- **PBLM Guide:** navegação assistida no portal, sem IA remota nem coleta de dados.
+- **PWA:** cache renovado e acesso offline apenas para páginas e recursos públicos já armazenados.
+
+### APK Android
+- **Widget Android:** botões Início, Comunidade e Notícias.
+- **Atalhos dinâmicos:** pressionar o ícone do aplicativo pode mostrar Comunidade, Personalizar e Notícias, dependendo do launcher.
+- **Receber texto compartilhado:** apresenta confirmação e pode copiar o texto ao abrir a Área pessoal, sem publicar automaticamente.
+- **Feedback tátil:** configurável para botões nativos.
+- **Entrada animada e ícone personalizado:** preservados da versão anterior.
+
+### Limites importantes
+- Conversa e feed precisam de conexão e login GitHub habilitado no Supabase.
+- O PWA e o WebView não compartilham automaticamente seus dados locais.
+- Notificações push remotas, chamadas e sincronização de imagens exigem infraestrutura adicional; não estão incluídas nesta versão.
+- O ranking não serve para autorização: cargos administrativos só podem ser concedidos no servidor.
+- Versão **1.2.0** deve ser compilada e publicada manualmente pelo workflow oficial com a mesma assinatura de versões anteriores.
